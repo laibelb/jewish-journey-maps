@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HistoricalEvent, { Event } from './HistoricalEvent';
 import InfoCard, { HistoricalInfo } from './InfoCard';
 
@@ -11,9 +10,15 @@ interface DiasporaMapProps {
 const DiasporaMap: React.FC<DiasporaMapProps> = ({ events, activePeriod }) => {
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   const [showInfo, setShowInfo] = useState<HistoricalInfo | null>(null);
+  const [migrationPaths, setMigrationPaths] = useState<JSX.Element[]>([]);
 
   // Filter events based on the active period
   const filteredEvents = events.filter(event => event.periodId === activePeriod);
+
+  useEffect(() => {
+    // Generate migration paths when events or selected event changes
+    generateMigrationPaths();
+  }, [filteredEvents, selectedEvent]);
 
   const handleEventClick = (event: Event) => {
     setSelectedEvent(event.id);
@@ -27,16 +32,89 @@ const DiasporaMap: React.FC<DiasporaMapProps> = ({ events, activePeriod }) => {
     });
   };
 
+  const generateMigrationPaths = () => {
+    // Create paths between related events
+    const paths: JSX.Element[] = [];
+    
+    // Find the selected event
+    const mainEvent = filteredEvents.find(e => e.id === selectedEvent);
+    
+    if (mainEvent && mainEvent.originCoordinates) {
+      // Draw a path from origin to destination
+      const path = (
+        <svg 
+          key={`path-${mainEvent.id}`} 
+          className="absolute top-0 left-0 w-full h-full z-5 pointer-events-none"
+        >
+          <path
+            d={`M ${mainEvent.originCoordinates[0]}% ${mainEvent.originCoordinates[1]}% Q ${
+              (mainEvent.originCoordinates[0] + mainEvent.coordinates[0]) / 2
+            }% ${
+              Math.min(mainEvent.originCoordinates[1], mainEvent.coordinates[1]) - 10
+            }%, ${mainEvent.coordinates[0]}% ${mainEvent.coordinates[1]}%`}
+            stroke="#FF6B6B"
+            strokeWidth="2"
+            fill="none"
+            strokeDasharray="5,5"
+            className="animate-dash"
+          />
+          <circle 
+            cx={`${mainEvent.originCoordinates[0]}%`} 
+            cy={`${mainEvent.originCoordinates[1]}%`} 
+            r="4" 
+            fill="#FF6B6B" 
+            opacity="0.7"
+          />
+        </svg>
+      );
+      paths.push(path);
+    }
+    
+    // Show all migration paths for the period when no event is selected
+    if (!selectedEvent) {
+      filteredEvents.forEach(event => {
+        if (event.originCoordinates) {
+          const path = (
+            <svg 
+              key={`path-${event.id}`} 
+              className="absolute top-0 left-0 w-full h-full z-5 pointer-events-none"
+            >
+              <path
+                d={`M ${event.originCoordinates[0]}% ${event.originCoordinates[1]}% Q ${
+                  (event.originCoordinates[0] + event.coordinates[0]) / 2
+                }% ${
+                  Math.min(event.originCoordinates[1], event.coordinates[1]) - 10
+                }%, ${event.coordinates[0]}% ${event.coordinates[1]}%`}
+                stroke="#FF6B6B"
+                strokeWidth="1.5"
+                fill="none"
+                strokeDasharray="5,5"
+                opacity="0.4"
+                className="animate-dash"
+              />
+            </svg>
+          );
+          paths.push(path);
+        }
+      });
+    }
+    
+    setMigrationPaths(paths);
+  };
+
   return (
     <div className="w-full h-full relative">
       <div className="map-container">
         {/* Base Map Image */}
         <div className="absolute inset-0 bg-map-base">
-          <div className="absolute inset-0 bg-[url('/map-base.jpg')] bg-cover bg-center opacity-70"></div>
+          <div className="absolute inset-0 bg-[url('/map-base.jpg')] bg-cover bg-center opacity-90"></div>
         </div>
 
-        {/* Map Overlay */}
+        {/* Map Overlay with Migration Paths */}
         <div className="absolute inset-0">
+          {/* Display migration paths */}
+          {migrationPaths}
+
           {/* Events */}
           {filteredEvents.map(event => (
             <HistoricalEvent
@@ -46,12 +124,10 @@ const DiasporaMap: React.FC<DiasporaMapProps> = ({ events, activePeriod }) => {
               onClick={() => handleEventClick(event)}
             />
           ))}
-
-          {/* Map paths representing migration routes could be added here */}
         </div>
 
-        {/* Controls */}
-        <div className="map-controls">
+        {/* Map Controls - keeping existing controls */}
+        <div className="map-controls absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm rounded-lg shadow-lg p-1 flex flex-col">
           <button 
             className="w-8 h-8 flex items-center justify-center text-primary hover:text-primary/80 transition-colors"
             aria-label="Zoom in"

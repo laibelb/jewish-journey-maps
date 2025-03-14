@@ -107,7 +107,8 @@ export const historicalEvents: Event[] = [
     location: 'Babylon',
     coordinates: [62.7, 40.5],
     description: 'King Cyrus of Persia conquers Babylon and issues a decree allowing Jews to return to Jerusalem and rebuild the Temple.',
-    periodId: 'second-temple'
+    periodId: 'second-temple',
+    originCoordinates: [56.2, 42.5] // From Jerusalem
   },
   {
     id: 'second-temple-destruction',
@@ -126,7 +127,8 @@ export const historicalEvents: Event[] = [
     location: 'Alexandria',
     coordinates: [51.3, 48.2],
     description: 'Alexandria hosts one of the largest and most influential Jewish communities in the diaspora, known for Hellenistic Jewish scholarship.',
-    periodId: 'roman-diaspora'
+    periodId: 'roman-diaspora',
+    originCoordinates: [56.2, 42.5] // From Jerusalem
   },
   {
     id: 'babylon-talmud',
@@ -135,7 +137,8 @@ export const historicalEvents: Event[] = [
     location: 'Babylon',
     coordinates: [62.7, 40.5],
     description: 'The completion of the Babylonian Talmud, the most comprehensive and influential compilation of Jewish oral traditions and legal discussions.',
-    periodId: 'roman-diaspora'
+    periodId: 'roman-diaspora',
+    originCoordinates: [56.2, 42.5] // From Jerusalem
   },
   {
     id: 'maimonides',
@@ -145,7 +148,8 @@ export const historicalEvents: Event[] = [
     coordinates: [40.5, 46.8],
     description: 'Birth of Moses Maimonides (Rambam) in Cordoba, who would become one of the most influential Jewish philosophers and legal scholars.',
     periodId: 'golden-age',
-    image: 'https://images.unsplash.com/photo-1594980796927-48d2f5851aae?q=80&w=1770'
+    image: 'https://images.unsplash.com/photo-1594980796927-48d2f5851aae?q=80&w=1770',
+    originCoordinates: [56.2, 42.5] // From Jerusalem originally
   },
   {
     id: 'spain-expulsion',
@@ -164,7 +168,8 @@ export const historicalEvents: Event[] = [
     location: 'Istanbul',
     coordinates: [58.7, 44.3],
     description: 'Sultan Bayezid II welcomes Jewish refugees from Spain to the Ottoman Empire, where they establish thriving communities in Istanbul, Salonica, and elsewhere.',
-    periodId: 'spanish-expulsion'
+    periodId: 'spanish-expulsion',
+    originCoordinates: [39, 46.8] // From Spain
   },
   {
     id: 'shtetl-culture',
@@ -174,7 +179,8 @@ export const historicalEvents: Event[] = [
     coordinates: [49.5, 37.8],
     description: 'Development of distinctive Ashkenazi Jewish culture centered in small towns (shtetls) throughout Poland-Lithuania, characterized by Yiddish language and religious observance.',
     periodId: 'eastern-europe',
-    image: 'https://images.unsplash.com/photo-1519863735318-91d437af8fc0?q=80&w=1770'
+    image: 'https://images.unsplash.com/photo-1519863735318-91d437af8fc0?q=80&w=1770',
+    originCoordinates: [47.7, 38.3] // From Germany region
   },
   {
     id: 'french-emancipation',
@@ -193,7 +199,8 @@ export const historicalEvents: Event[] = [
     coordinates: [27.5, 41.5],
     description: 'Ellis Island opens as America\'s primary immigration station, processing millions of Jewish immigrants fleeing persecution and economic hardship in Eastern Europe.',
     periodId: 'mass-migration',
-    image: 'https://images.unsplash.com/photo-1550850839-8dc894ed385a?q=80&w=1775'
+    image: 'https://images.unsplash.com/photo-1550850839-8dc894ed385a?q=80&w=1775',
+    originCoordinates: [49.5, 37.8] // From Poland region
   },
   {
     id: 'first-zionist-congress',
@@ -221,7 +228,8 @@ export const historicalEvents: Event[] = [
     coordinates: [56.6, 43.3],
     description: 'David Ben-Gurion declares the establishment of the State of Israel, fulfilling the Zionist goal of Jewish national self-determination in the ancestral homeland.',
     periodId: 'israel',
-    image: 'https://images.unsplash.com/photo-1541924778220-83a8376642ae?q=80&w=1772'
+    image: 'https://images.unsplash.com/photo-1541924778220-83a8376642ae?q=80&w=1772',
+    originCoordinates: [47.7, 38.3] // Many from Europe
   },
   {
     id: 'operation-moses',
@@ -230,7 +238,8 @@ export const historicalEvents: Event[] = [
     location: 'Ethiopia/Israel',
     coordinates: [53.8, 51.2],
     description: 'Covert evacuation of Ethiopian Jews (Beta Israel) to Israel during a famine in Sudan, rescuing thousands from persecution and starvation.',
-    periodId: 'israel'
+    periodId: 'israel',
+    originCoordinates: [50.5, 59.7] // From Ethiopia
   },
   {
     id: 'soviet-aliyah',
@@ -240,6 +249,7 @@ export const historicalEvents: Event[] = [
     coordinates: [65.0, 35.0],
     description: 'With the fall of the Soviet Union, hundreds of thousands of Soviet Jews immigrate to Israel, the United States, and other countries.',
     periodId: 'israel',
-    image: 'https://images.unsplash.com/photo-1566138709953-e9eda3bd7620?q=80&w=1770'
+    image: 'https://images.unsplash.com/photo-1566138709953-e9eda3bd7620?q=80&w=1770',
+    originCoordinates: [56.6, 43.3] // Destination in Israel
   }
 ];
