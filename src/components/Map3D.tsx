@@ -87,29 +87,31 @@ const MigrationTrail: React.FC<{
     
     // Create curved path
     const mid = from.clone().add(to).multiplyScalar(0.5);
-    mid.normalize().multiplyScalar(2.3); // Raise the middle point
+    mid.normalize().multiplyScalar(2.3);
     
     const curve = new THREE.QuadraticBezierCurve3(from, mid, to);
     return curve.getPoints(50);
   }, [fromEvent, toEvent]);
 
   return (
-    <line>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={points.length}
-          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <lineBasicMaterial 
-        color={active ? "#ffd700" : "#ff6b6b"} 
-        transparent
-        opacity={active ? 0.8 : 0.4}
-        linewidth={active ? 3 : 2}
-      />
-    </line>
+    <group>
+      {points.slice(0, -1).map((point, index) => {
+        const nextPoint = points[index + 1];
+        const direction = nextPoint.clone().sub(point);
+        const distance = direction.length();
+        
+        return (
+          <mesh key={index} position={point}>
+            <cylinderGeometry args={[0.002, 0.002, distance, 4]} />
+            <meshBasicMaterial 
+              color={active ? "#ffd700" : "#ff6b6b"} 
+              transparent
+              opacity={active ? 0.8 : 0.4}
+            />
+          </mesh>
+        );
+      })}
+    </group>
   );
 };
 
