@@ -93,24 +93,26 @@ const MigrationTrail: React.FC<{
     return curve.getPoints(50);
   }, [fromEvent, toEvent]);
 
+  if (!points.length) return null;
+
   return (
     <group>
-      {points.slice(0, -1).map((point, index) => {
-        const nextPoint = points[index + 1];
-        const direction = nextPoint.clone().sub(point);
-        const distance = direction.length();
-        
-        return (
-          <mesh key={index} position={point}>
-            <cylinderGeometry args={[0.002, 0.002, distance, 4]} />
-            <meshBasicMaterial 
-              color={active ? "#ffd700" : "#ff6b6b"} 
-              transparent
-              opacity={active ? 0.8 : 0.4}
-            />
-          </mesh>
-        );
-      })}
+      <mesh>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={points.length}
+            array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          size={0.008}
+          color={active ? "#ffd700" : "#ff6b6b"}
+          transparent
+          opacity={active ? 0.9 : 0.6}
+        />
+      </mesh>
     </group>
   );
 };
