@@ -131,20 +131,6 @@ const Map3D: React.FC<Map3DProps> = ({ events, activePeriod }) => {
     });
   };
 
-  const migrationPairs = useMemo(() => {
-    const pairs: Array<{ from: Event; to: Event }> = [];
-    filteredEvents.forEach(event => {
-      if (event.originCoordinates) {
-        const originEvent = {
-          ...event,
-          coordinates: event.originCoordinates
-        };
-        pairs.push({ from: originEvent, to: event });
-      }
-    });
-    return pairs;
-  }, [filteredEvents]);
-
   return (
     <div className="w-full h-full relative">
       <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
@@ -155,21 +141,15 @@ const Map3D: React.FC<Map3DProps> = ({ events, activePeriod }) => {
         <pointLight position={[10, 10, 10]} intensity={1} />
         <pointLight position={[-10, -10, -10]} intensity={0.5} />
         
-        {/* Stars background */}
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
-        
-        {/* Globe */}
-        <Globe />
-        
-        {/* Migration trails */}
-        {migrationPairs.map((pair, index) => (
-          <MigrationTrail
-            key={`trail-${index}`}
-            fromEvent={pair.from}
-            toEvent={pair.to}
-            active={selectedEvent === pair.to.id}
+        {/* Simple globe */}
+        <mesh>
+          <sphereGeometry args={[2, 32, 32]} />
+          <meshStandardMaterial 
+            color="#1a365d"
+            transparent
+            opacity={0.8}
           />
-        ))}
+        </mesh>
         
         {/* Event markers */}
         {filteredEvents.map(event => (
