@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 import Timeline from '../components/Timeline';
-import DiasporaMap from '../components/DiasporaMap';
+import Map3D from '../components/Map3D';
 import { historicalPeriods, historicalEvents } from '../lib/mapData';
 
 const Index = () => {
@@ -56,8 +56,8 @@ const Index = () => {
                       {historicalPeriods.find(p => p.id === activePeriod)?.year || ''}
                     </div>
                   </div>
-                  <div className="h-[calc(100%-57px)]">
-                    <DiasporaMap events={historicalEvents} activePeriod={activePeriod} />
+                  <div className="h-[calc(100%-57px)] bg-gradient-to-b from-background/5 to-background/20 rounded-b-xl">
+                    <Map3D events={historicalEvents} activePeriod={activePeriod} />
                   </div>
                 </div>
               )}
