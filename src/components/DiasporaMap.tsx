@@ -106,8 +106,9 @@ const DiasporaMap: React.FC<DiasporaMapProps> = ({ events, activePeriod }) => {
     <div className="w-full h-full relative">
       <div className="map-container">
         {/* Base Map Image */}
-        <div className="absolute inset-0 bg-map-base">
-          <div className="absolute inset-0 bg-[url('/map-base.jpg')] bg-cover bg-center opacity-90"></div>
+        <div className="absolute inset-0 bg-secondary/20">
+          <div className="absolute inset-0 bg-[url('/map-base.jpg')] bg-cover bg-center opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/10 to-background/30"></div>
         </div>
 
         {/* Map Overlay with Migration Paths */}
