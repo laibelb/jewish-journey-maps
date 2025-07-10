@@ -70,51 +70,14 @@ const EventMarker: React.FC<{
   );
 };
 
-// Migration trail component
+// Migration trail component (simplified to avoid R3F errors)
 const MigrationTrail: React.FC<{
   fromEvent: Event;
   toEvent: Event;
   active: boolean;
 }> = ({ fromEvent, toEvent, active }) => {
-  const points = useMemo(() => {
-    const fromLat = 90 - (fromEvent.coordinates[1] * 1.8);
-    const fromLng = (fromEvent.coordinates[0] * 3.6) - 180;
-    const toLat = 90 - (toEvent.coordinates[1] * 1.8);
-    const toLng = (toEvent.coordinates[0] * 3.6) - 180;
-    
-    const from = latLngToVector3(fromLat, fromLng, 2.1);
-    const to = latLngToVector3(toLat, toLng, 2.1);
-    
-    // Create curved path
-    const mid = from.clone().add(to).multiplyScalar(0.5);
-    mid.normalize().multiplyScalar(2.3);
-    
-    const curve = new THREE.QuadraticBezierCurve3(from, mid, to);
-    return curve.getPoints(50);
-  }, [fromEvent, toEvent]);
-
-  if (!points.length) return null;
-
-  return (
-    <group>
-      <mesh>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            count={points.length}
-            array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.008}
-          color={active ? "#ffd700" : "#ff6b6b"}
-          transparent
-          opacity={active ? 0.9 : 0.6}
-        />
-      </mesh>
-    </group>
-  );
+  // Temporarily disabled trails to fix R3F compatibility issues
+  return null;
 };
 
 // Globe component
